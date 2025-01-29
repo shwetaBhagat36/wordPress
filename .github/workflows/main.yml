@@ -21,7 +21,7 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.34.228.6.92}}  # Add your SSH private key in GitHub secrets
+          ssh-private-key: ${{ secrets.'34.228.6.92'}}  # Add your SSH private key in GitHub secrets
 
       # Step 3: Upload WordPress files to the server
       - name: Upload files to server
