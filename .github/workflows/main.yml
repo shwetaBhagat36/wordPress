@@ -1,0 +1,88 @@
+name: Deploy WordPress to Nginx Server
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment when there's a push to the main branch
+  pull_request:
+    branches:
+      - main  # Also trigger deployment on pull requests to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Checkout the code from the GitHub repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up SSH for remote server access
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Ensure the SSH key is saved in your GitHub secrets
+
+      # Step 3: Upload WordPress files to the server
+      - name: Upload files to server
+        run: |
+          rsync -avz --exclude '.git' --exclude 'node_modules' --exclude 'wp-config.php' ./ username@name: Deploy WordPress to Nginx Server
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment when there's a push to the main branch
+  pull_request:
+    branches:
+      - main  # Also trigger deployment on pull requests to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Checkout the code from the GitHub repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up SSH for remote server access
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Ensure the SSH key is saved in your GitHub secrets
+
+      # Step 3: Upload WordPress files to the server
+      - name: Upload files to server
+        run: |
+          rsync -avz --exclude '.git' --exclude 'node_modules' --exclude 'wp-config.php' ./ username@your_34.228.6.92:/var/www/html/wordpress
+
+      # Step 4: SSH to the server to restart Nginx and PHP-FPM
+      - name: Restart Nginx and PHP-FPM on the server
+        run: |
+          ssh -o StrictHostKeyChecking=no username@34.228.6.92 << 'EOF'
+            sudo systemctl restart nginx
+            sudo systemctl restart php8.3-fpm  # Adjust PHP version if needed
+          EOF
+          
+ # Step 5: Optionally, use wp-cli to update the database if needed
+      - name: Update WordPress Database (Optional)
+        run: |
+          ssh -o StrictHostKeyChecking=no username@34.228.6.92 << 'EOF'
+            wp db migrate  # You can replace this with any wp-cli command if needed
+          EOF
+
+
+      # Step 6: Optionally, clear cache if you are using a cache system like Redis or Varnish
+      - name: Clear Cache (Optional)
+        run: |
+          ssh -o StrictHostKeyChecking=no username@34.228.6.92 << 'EOF'
+            sudo systemctl restart redis
+          EOF
+:/var/www/html/wordpress
+
+      # Step 7: Optionally, clear cache if you are using a cache system like Redis or Varnish
+      - name: Clear Cache (Optional)
+        run: |
+          ssh -o StrictHostKeyChecking=no username@34.228.6.92 << 'EOF'
+            sudo systemctl restart redis
+          EOF
