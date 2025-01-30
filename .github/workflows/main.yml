@@ -33,13 +33,13 @@ jobs:
       # Step 4: Upload WordPress files to the server
       - name: Upload files to server
         run: |
-          rsync -avz --exclude '.git' --exclude 'node_modules' --exclude 'wp-config.php' ./ username@52.201.236.98:/var/www/html/wordpress
+          rsync -avz --exclude '.git' --exclude 'node_modules' --exclude 'wp-config.php' ./ ubuntu@52.201.236.98:/var/www/html/wordpress
 
 
       # Step 5: SSH to the server and restart Nginx and PHP-FPM
       - name: Restart Nginx and PHP-FPM on the server
         run: |
-          ssh -o StrictHostKeyChecking=no username@52.201.236.98 << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@52.201.236.98 << 'EOF'
             sudo systemctl restart nginx
             sudo systemctl restart php8.3-fpm  # Adjust PHP version if necessary
           EOF
@@ -47,7 +47,7 @@ jobs:
       # Step 6: Optionally, use wp-cli to update the database if needed
       - name: Update WordPress Database (Optional)
         run: |
-          ssh -o StrictHostKeyChecking=no username@52.201.236.98 << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@52.201.236.98 << 'EOF'
             wp db migrate  # You can replace this with any wp-cli command if needed
           EOF
 
