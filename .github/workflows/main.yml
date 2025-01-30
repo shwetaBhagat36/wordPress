@@ -1,5 +1,5 @@
- name: Deploy WordPress to LEMP Server
-
+ name: Deploy WordPress to LEMP Server  
+ 
 on:
   push:
     branches:
