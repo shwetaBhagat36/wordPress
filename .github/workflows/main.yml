@@ -55,6 +55,6 @@ jobs:
       # Step 7: Clear cache if using Redis or any caching system (optional)
       - name: Clear Cache (Optional)
         run: |
-          ssh -o StrictHostKeyChecking=no username@52.201.236.98 << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@52.201.236.98 << 'EOF'
             sudo systemctl restart redis  # Only if you're using Redis caching
           EOF
