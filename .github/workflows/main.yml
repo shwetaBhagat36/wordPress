@@ -48,9 +48,8 @@ jobs:
       - name: Update WordPress Database (Optional)
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@52.201.236.98 << 'EOF'
+          wp db migrate  # You can replace this with any wp-cli command if needed
           EOF
-        # wp db migrate  # You can replace this with any wp-cli command if needed
-          
 
       # Step 7: Clear cache if using Redis or any caching system (optional)
       - name: Clear Cache (Optional)
