@@ -26,12 +26,12 @@ jobs:
       # Step 3: Upload WordPress files to the server
       - name: Upload files to server
         run: |
-          rsync -avz --exclude '.git' --exclude 'node_modules' --exclude 'wp-config.php' ./ username@34.228.6.92:/var/www/html/wordpress
+          rsync -avz --exclude '.git' --exclude 'node_modules' --exclude 'wp-config.php' ./ username@52.201.236.98:/var/www/html/wordpress
 
       # Step 4: SSH to the server and restart Nginx and PHP-FPM
       - name: Restart Nginx and PHP-FPM on the server
         run: |
-          ssh -o StrictHostKeyChecking=no username@34.228.6.92 << 'EOF'
+          ssh -o StrictHostKeyChecking=no username@52.201.236.98 << 'EOF'
             sudo systemctl restart nginx
             sudo systemctl restart php8.3-fpm  # Adjust PHP version if necessary
           EOF
@@ -39,13 +39,13 @@ jobs:
       # Step 5: Optionally, use wp-cli to update the database if needed
       - name: Update WordPress Database (Optional)
         run: |
-          ssh -o StrictHostKeyChecking=no username@34.228.6.92 << 'EOF'
+          ssh -o StrictHostKeyChecking=no username@52.201.236.98 << 'EOF'
             wp db migrate  # You can replace this with any wp-cli command if needed
           EOF
 
       # Step 6: Clear cache if using Redis or any caching system (optional)
       - name: Clear Cache (Optional)
         run: |
-          ssh -o StrictHostKeyChecking=no username@34.228.6.92 << 'EOF'
+          ssh -o StrictHostKeyChecking=no username@52.201.236.98 << 'EOF'
             sudo systemctl restart redis  # Only if you're using Redis caching
           EOF
